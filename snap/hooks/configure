@@ -1,0 +1,17 @@
+#!/bin/bash
+
+"${SNAP}/bin/mkdir" -p "$SNAP_COMMON/data"
+
+if ! -f "${SNAP_COMMON}/config.yaml"; then
+	echo "---
+version: 0.1
+log:
+  fields:
+    service: registry
+http:
+  addr: ':5000'
+storage:
+  filesystem:
+    rootdirectory: '${SNAP_COMMON}/data'
+" > "${SNAP_COMMON}/config.yaml"
+fi

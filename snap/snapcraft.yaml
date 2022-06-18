@@ -1,0 +1,30 @@
+name: registry
+version: '0.1'
+summary: Docker registry
+description: |
+  Docker registry
+
+grade: stable
+confinement: strict
+
+# type: base
+base: core18
+
+parts:
+  misc:
+    plugin: dump
+    source: ./scripts
+  registry:
+    plugin: go
+    source-type: git
+    source: https://github.com/docker/distribution
+    build-environment:
+    - CGO_ENABLED: "0"
+    prime:
+    - bin/registry
+
+apps:
+  registry:
+    command: run-registry
+    daemon: simple
+    plugs: [network-bind]
